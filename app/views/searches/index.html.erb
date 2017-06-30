@@ -1,0 +1,7 @@
+<% provide :title, @title %>
+<%= @story.count %>
+<% @story.each do |story| %>
+  <div class="col-sm-3">
+    <h5><%= story.name %></h5>
+  </div>
+<% end %>

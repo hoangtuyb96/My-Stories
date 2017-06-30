@@ -2,3 +2,10 @@ scss_files: 'app/assets/stylesheets/**'
 exclude:
   - 'app/assets/stylesheets/application.scss'
   - 'vendor/assets/**'
+linters:
+  ImportantRule:
+    enabled: false
+  QualifyingElement:
+    enabled: false
+  IdSelector:
+    enabled: false

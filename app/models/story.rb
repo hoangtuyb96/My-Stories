@@ -2,6 +2,8 @@ class Story < ApplicationRecord
   STORY_PARAMS = [:name, :description, :is_public, :due_date,
     steps_attributes: [:id, :content, :_destroy]].freeze
 
+  searchkick
+
   has_many :comments
   has_many :votes
   has_many :reports
@@ -17,3 +19,4 @@ class Story < ApplicationRecord
 
   scope :order_by_time, ->{order created_at: :desc}
 end
+Story.reindex

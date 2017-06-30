@@ -19,7 +19,8 @@ gem "bootstrap-sass", "3.3.7"
 gem "devise", "~> 4.3"
 gem "pundit"
 gem "faker", "1.7.3"
-
+gem "searchkick"
+gem "jquery-ui-rails"
 group :development, :test do
   gem "byebug", platform: :mri
 end

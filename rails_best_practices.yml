@@ -30,7 +30,9 @@ RemoveUnusedMethodsInControllersCheck: {
     StoriesController#find_story, StoriesController#authorize_story,
     ApplicationController#user_not_authorize, PagesController#valid_page,
     RegistrationsController#create, ApplicationController#configure_permitted_parameters,
-    StoriesController#index
+    StoriesController#index,
+    SearchesController#index, SearchesController#search_story,
+    AutocompleteController#index
   ]
 }
 RemoveUnusedMethodsInHelpersCheck: { except_methods: [] }

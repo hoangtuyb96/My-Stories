@@ -8,4 +8,11 @@ module ApplicationHelper
     link_to(name, "#", class: "add-fields",
       data: {id: id, fields: fields.delete("\n", "")})
   end
+
+  def full_title page_title = ""
+    base_title = t "navbar.home"
+
+    return base_title if page_title.empty?
+    page_title + " - " + base_title
+  end
 end
