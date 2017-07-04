@@ -1,0 +1,8 @@
+<%= form_tag searches_path, method: :get, class: "navbar-form" do |f| %>
+  <div class="form-group">
+    <%= text_field_tag "query", params[:query], class: "form-control search-form",
+      id: "story-search", autocomplete: "off", placeholder: t("search"),
+      required: true %>
+    <span><%= button_tag "", class: "glyphicon glyphicon-search search-btn" %></span>
+  </div>
+<% end %>
