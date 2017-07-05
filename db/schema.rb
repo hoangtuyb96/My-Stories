@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170626013418) do
+ActiveRecord::Schema.define(version: 20170705035141) do
 
   create_table "comments", force: :cascade do |t|
     t.integer  "user_id"
@@ -39,7 +39,6 @@ ActiveRecord::Schema.define(version: 20170626013418) do
   create_table "steps", force: :cascade do |t|
     t.string   "content"
     t.integer  "completed_rate", default: 0
-    t.integer  "vote",           default: 0
     t.integer  "story_id"
     t.datetime "created_at",                 null: false
     t.datetime "updated_at",                 null: false
@@ -51,7 +50,6 @@ ActiveRecord::Schema.define(version: 20170626013418) do
     t.string   "description"
     t.float    "completed_rate",   default: 0.0
     t.integer  "numbers_of_steps", default: 0
-    t.integer  "vote",             default: 0
     t.boolean  "is_public",        default: false
     t.datetime "due_date"
     t.datetime "created_at",                       null: false
@@ -83,11 +81,10 @@ ActiveRecord::Schema.define(version: 20170626013418) do
 
   create_table "votes", force: :cascade do |t|
     t.integer  "user_id"
-    t.integer  "story_id"
-    t.integer  "step_id"
-    t.integer  "vote_value"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.string   "voteable_type"
+    t.integer  "voteable_id"
   end
 
 end

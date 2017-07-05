@@ -12,19 +12,17 @@ end
   description = Faker::Hipster.paragraphs
   completed_rate = rand(90.0)
   numbers_of_steps = rand(6)
-  vote = rand(8)
   is_public = rand(2) == 1 ? true : false
   Story.create!(user_id: user_id, name: name, description: description,
     completed_rate: completed_rate, numbers_of_steps: numbers_of_steps,
-    vote: vote, is_public: is_public, due_date: due_date)
+    is_public: is_public, due_date: due_date)
 end
 
 20.times do |n|
   content = Faker::HarryPotter.quote
   completed_rate = rand(90)
-  vote = rand(8)
   story_id = Story.order("RANDOM()").first.id
-  Step.create(content: content, completed_rate: completed_rate, vote: vote,
+  Step.create(content: content, completed_rate: completed_rate,
     story_id: story_id)
 end
 
@@ -51,4 +49,20 @@ end
     followed_id = User.order("RANDOM()").first.id
   end
   Relationship.create(follower_id: follower_id, followed_id: followed_id)
+end
+
+10.times do
+  user_id = User.order("RANDOM()").first.id
+  voteable_id = Story.order("RANDOM()").first.id
+  voteable_type = "Story"
+  Vote.create(user_id: user_id, voteable_id: voteable_id,
+    voteable_type: voteable_type)
+end
+
+10.times do
+  user_id = User.order("RANDOM()").first.id
+  voteable_id = Step.order("RANDOM()").first.id
+  voteable_type = "Step"
+  Vote.create(user_id: user_id, voteable_id: voteable_id,
+    voteable_type: voteable_type)
 end
