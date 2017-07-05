@@ -7,7 +7,6 @@ RSpec.describe Step, type: :model do
        it {should have_db_column(:story_id).of_type(:integer)}
        it {should have_db_column(:content).of_type(:string)}
        it {should have_db_column(:completed_rate).of_type(:integer)}
-       it {should have_db_column(:vote).of_type(:integer)}
      end
    end
 
@@ -27,9 +26,7 @@ RSpec.describe Step, type: :model do
 
   describe "associations" do
     it {should have_many :comments}
-    it {should have_many :votes}
 
     it {should belong_to :story}
   end
-
 end

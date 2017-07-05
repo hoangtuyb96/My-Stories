@@ -9,7 +9,6 @@ RSpec.describe Story, type: :model do
        it {should have_db_column(:description).of_type(:string)}
        it {should have_db_column(:completed_rate).of_type(:float)}
        it {should have_db_column(:numbers_of_steps).of_type(:integer)}
-       it {should have_db_column(:vote).of_type(:integer)}
        it {should have_db_column(:is_public).of_type(:boolean)}
        it {should have_db_column(:due_date).of_type(:datetime)}
      end
@@ -44,11 +43,9 @@ RSpec.describe Story, type: :model do
 
   describe "associations" do
     it {should have_many :comments}
-    it {should have_many :votes}
     it {should have_many :reports}
     it {should have_many :steps}
 
     it {should belong_to :user}
   end
-
 end

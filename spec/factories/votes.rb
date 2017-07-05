@@ -1,8 +1,11 @@
 FactoryGirl.define do
-  factory :vote do |f|
+  factory :story_vote, class: "Vote" do |f|
     f.user {FactoryGirl.build :user}
-    f.story {FactoryGirl.build :story}
-    f.step {FactoryGirl.build :step}
-    f.vote_value 1
+    f.association :voteable, factory: :story
+  end
+
+  factory :step_vote, class: "Vote" do |f|
+    f.user {FactoryGirl.build :user}
+    f.association :voteable, factory: :step
   end
 end

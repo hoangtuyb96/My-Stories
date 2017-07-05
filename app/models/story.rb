@@ -5,7 +5,7 @@ class Story < ApplicationRecord
   searchkick
 
   has_many :comments
-  has_many :votes
+  has_many :votes, as: :voteable, dependent: :destroy
   has_many :reports
   has_many :steps, dependent: :destroy, inverse_of: :story
   accepts_nested_attributes_for :steps, reject_if: :all_blank,

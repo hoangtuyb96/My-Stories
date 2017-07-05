@@ -1,7 +1,8 @@
 class Vote < ApplicationRecord
   belongs_to :user
-  belongs_to :story
-  belongs_to :step
+  belongs_to :voteable, polymorphic: true
 
-  validates :vote_value, presence: true
+  validates :user, presence: true,
+    uniqueness: {scope: [:voteable_type, :voteable_id]}
+  validates :voteable, presence: true
 end
