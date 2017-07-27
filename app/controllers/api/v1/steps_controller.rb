@@ -16,8 +16,8 @@ class Api::V1::StepsController < Api::BaseController
 
   def create
     if story.present?
-      @step = story.steps.new steps_params
-      step.save ? step_created_success : step_created_fail
+      save_steps if params_steps.present?
+      step_created_success
     else
       cant_find_story_respone
     end
@@ -44,14 +44,29 @@ class Api::V1::StepsController < Api::BaseController
       sub_steps_attributes: [:name, :content, :_destroy]
   end
 
+  def params_steps
+    params[:step]
+  end
+
   def find_comments
     @comments = Comment.comments_for_step params[:id]
+  end
+
+  def save_steps
+    params_steps.each do |params_step|
+      params[:step] = params_step
+      @step = story.steps.new steps_params
+      unless step.save
+        step_created_fail
+        break
+      end
+    end
   end
 
   def step_created_success
     render json: {
       messages: I18n.t("steps.messages.created_success"),
-      data: {step: step}
+      data: {story: story_serializer}
     }, status: :ok
   end
 
@@ -70,11 +85,7 @@ class Api::V1::StepsController < Api::BaseController
   def step_showed
     render json: {
       messages: I18n.t("steps.messages.step_showed"),
-      data: {
-        step: step_serializer,
-        comments: comments,
-        sub_steps: sub_step_serializer
-      }
+      data: {step: step_serializer}
     }, status: :ok
   end
 
@@ -86,5 +97,10 @@ class Api::V1::StepsController < Api::BaseController
   def step_serializer
     Serializers::Step::StepSerializer
       .new(object: step).serializer
+  end
+
+  def story_serializer
+    Serializers::Story::StorySerializer
+      .new(object: story).serializer
   end
 end
