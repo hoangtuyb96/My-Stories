@@ -1,6 +1,6 @@
 class Api::V1::UsersController < Api::BaseController
   before_action :find_object, only: %i(show update destroy).freeze
-  
+
   def index
     @users = User.all
     render json: {
