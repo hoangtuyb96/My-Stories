@@ -28,6 +28,7 @@ gem "bundle-audit"
 gem "reek"
 gem "scss_lint"
 gem "scss_lint_reporter_checkstyle"
+gem "activity_notification"
 
 group :development, :test do
   gem "pry"

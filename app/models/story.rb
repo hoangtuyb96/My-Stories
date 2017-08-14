@@ -11,7 +11,7 @@ class Story < ApplicationRecord
 
   has_many :follower_user, class_name: RelationshipStory.name,
     dependent: :destroy
-  has_many :followers, through: :follower_user, source: :user
+  has_many :followers, through: :follower_user, source: :users
   has_many :comments, as: :commentable
   has_many :votes, as: :voteable, dependent: :destroy
   has_many :reports
@@ -22,7 +22,7 @@ class Story < ApplicationRecord
 
   acts_as_notifiable :users,
     targets: ->(story, key) {
-      ()
+      (story.followers - )
     }
 
   lambda_params_category_id = lambda do |params_category_id|
