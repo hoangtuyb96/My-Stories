@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   acts_as_token_authenticatable
+  acts_as_notification_target
 
   VALID_EMAIL_REGEX = /\A([\w+\-].?)+@[a-z\d\-]+(\.[a-z]+)*\.[a-z]+\z/i
   ATTRIBUTES_PARAMS = [:email, :name, :avatar,

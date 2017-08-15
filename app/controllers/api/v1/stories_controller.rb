@@ -36,6 +36,7 @@ class Api::V1::StoriesController < Api::BaseController
     if correct_user story.user
       if story.update_attributes stories_params
         update_each_step if params_steps.present?
+        send_notification
         action_successfully
       else
         action_fail
@@ -63,6 +64,10 @@ class Api::V1::StoriesController < Api::BaseController
 
   def update_each_step
     StoryService.new(total_params: params[:story], story: story).update_step
+  end
+
+  def send_notification
+    Notifications::SendNotificationService.new(story: story).perform
   end
 
   def params_steps
