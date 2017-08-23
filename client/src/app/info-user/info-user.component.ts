@@ -17,16 +17,25 @@ import { IMG_URL } from '../constants';
 
 export class InfoUserComponent implements OnInit {
   current_user: any;
+  following: any[];
   user: User;
   user_id: number;
   user_name: string;
   user_email: string;
+  user_followed: boolean;
+  user_followed_status: String;
+  relastionship_id: number;
   stories: any;
+  following_story: any[];
   position = 'before';
   constructor(private infoUser: InfoUserService, private route: ActivatedRoute,
     private dialog: MdDialog, private router: Router, private snackBar: MdSnackBar) { }
 
   ngOnInit() {
+    this.getDataUser();
+  }
+
+  getDataUser(){
     if (localStorage.getItem('currentUser')) {
       if (this.route.snapshot.params['id']) {
         this.user_id = +this.route.snapshot.params['id'];
@@ -44,6 +53,36 @@ export class InfoUserComponent implements OnInit {
     }
   }
 
+  onFollowButtom(id: number){
+    if (this.user_followed != false ) {
+      this.onUnfollow(id);
+    } else {
+      this.onFollow(id);
+    }
+  }
+
+  onFollow(id: number) {
+    console.log(typeof id);
+    this.current_user = JSON.parse(localStorage.getItem('currentUser'));
+    this.infoUser.createFollow(id, this.current_user.token).subscribe(response => this.followpath(response));
+  }
+
+  onUnfollow(id: number) {
+    this.current_user = JSON.parse(localStorage.getItem('currentUser'));
+    this.infoUser.destroyFollow(this.relastionship_id, id, this.current_user.token).subscribe(response => this.unfollowpath(response));
+  }
+
+  unfollowpath(response){
+    this.user_followed = false;
+    this.user_followed_status = 'Follow';
+  }
+
+  followpath(response){
+    this.user_followed_status = 'Unfollow';
+    this.user_followed = true;
+    this.getDataUser();
+  }
+
   checkPageCurrentUser() {
     if (JSON.parse(localStorage.getItem('currentUser')).id === this.user_id) {
       return true
@@ -53,11 +92,22 @@ export class InfoUserComponent implements OnInit {
 
   onSuccess(response) {
     const user = response.data.user;
-    this.user = new User(user.id, user.name, user.email, user.avatar, user.stories);
+    this.user = new User(user.id, user.name, user.email, user.avatar, user.stories, user.following_user, user.following_story);
+    this.following = this.user.following;
     this.user_name = user.name;
     this.user_email = user.email;
     this.stories = user.stories;
-    $('#avatar').attr('src', IMG_URL + this.user.avatar);
+    this.user_followed = response.data.followed;
+    this.following_story = user.following_story;
+    if (this.user_followed  === false) {
+      this.user_followed_status = 'Follow'
+    } else {
+      this.user_followed_status = 'Unfollow',
+      this.relastionship_id = response.data.followed;
+    }
+    if (this.user.avatar) { 
+      $('#avatar').attr('src', IMG_URL + this.user.avatar);
+    }
   }
 
   chooseImage(id: string) {
