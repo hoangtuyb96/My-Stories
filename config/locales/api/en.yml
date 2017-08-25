@@ -29,6 +29,7 @@ en:
       clone_fail: "Can't clone this story now, please try again!!!"
       notification_update: "Story %{name} has been updated"
       notification_create: "%{name_user} created new story %{name_story}"
+      story_cloned: "You have cloned this story"
   steps: 
     messages:
       step_not_found: "Can't find step..."

@@ -3,7 +3,7 @@ module Serializers
     class StorySerializer < Serializers::SupportSerializer
       attrs :id, :name, :description, :total_vote, :is_public, :category_id
       attrs :due_date, :user_id, :created_at, :updated_at, :picture, :user_name
-      attrs :steps, :comments, :users_voted
+      attrs :steps, :comments, :users_voted, :cloners
 
       delegate :id, to: :object
       def steps
@@ -22,6 +22,11 @@ module Serializers
 
       def user_name
         object.user.name
+      end
+
+      def cloners
+        Serializers::Users::UserMinForClonerSerializer
+          .new(object: object.cloners).serializer
       end
     end
   end
