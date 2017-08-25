@@ -21,6 +21,9 @@ class User < ApplicationRecord
   has_many :followed_story, class_name: RelationshipStory.name,
     dependent: :destroy
   has_many :following_story, through: :followed_story, source: :story
+  has_many :cloned_story, class_name: CloneStory.name,
+    dependent: :destroy
+  has_many :cloning_story, through: :cloned_story, source: :story
   has_many :comments
   has_many :votes
   has_many :reports

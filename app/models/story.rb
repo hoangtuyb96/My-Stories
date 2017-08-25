@@ -17,6 +17,9 @@ class Story < ApplicationRecord
   has_many :notifications, as: :notificationable
   has_many :reports
   has_many :steps, dependent: :destroy
+  has_many :cloner_user, class_name: CloneStory.name,
+    dependent: :destroy
+  has_many :cloners, through: :cloner_user, source: :user
 
   belongs_to :user
   belongs_to :category
